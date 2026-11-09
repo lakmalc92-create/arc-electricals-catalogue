@@ -1,13 +1,15 @@
 # Arc Electricals customer catalogue (public website)
 
-This folder is the customer-facing, static catalogue. It includes only products with wholesale prices from the supplied workbook, the Arc Electricals logo, search, cart, optional variants, and WhatsApp order handoff to 0767539827. Customers can view the catalogue on desktop or mobile.
+Responsive customer page with search, wholesale prices, cart, optional variants and WhatsApp ordering to 0767539827. The repository contains only the public customer page and catalogue data; the PC admin app and its local orders remain separate.
 
-## Important data boundary
+## Automatic catalogue updates
 
-This site does not contain the PC admin app or its private order management. Customer orders are sent to WhatsApp and are not stored automatically in the PC app. The site is built from the exported workbook list. Photos and item changes saved in the PC app do not automatically update this website; republish the site with an updated public product export when the catalogue changes.
+The page starts from the packaged workbook snapshot and can read the current live catalogue from Supabase. Set `CLOUD_CATALOGUE.url` and `CLOUD_CATALOGUE.key` in `customer.js` to the project URL and public publishable/anon key. After one-time Supabase setup, each successful product, price, variant or photo save in the PC app updates the cloud catalogue; customers see the latest active catalogue when they open or refresh this page.
 
-## Publish
+Customer enquiries open WhatsApp. They are not inserted into the PC app or cloud database automatically; copy the received WhatsApp message into the PC app's Orders page.
 
-Upload the contents of this folder (including `seed-products.js`, `styles.css`, and `customer.js`) to the root of a public static hosting repository or static-site host. The home page is `index.html`. GitHub Pages can host this as a free static site; a public GitHub repository or hosting account is required. Keep the separate PC workspace private because it includes management functionality and locally stored data.
+## Data notes
 
-Source price/stock workbook was exported 15 Oct 2026. Ask customers to confirm current price and availability before fulfilment.
+The public catalogue includes wholesale product names, item codes, prices, variants and product images. It omits supplier names and stock counts. Original workbook export date: 15 Oct 2026; confirm current prices and availability before fulfilment.
+
+For one-time database setup instructions, see `SUPABASE-SETUP-SI.md` and `supabase-setup.sql` in the PC app package. Keep that PC admin package private.
